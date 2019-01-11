@@ -317,7 +317,7 @@ var arcdata = [
         virus: "reston"
 		,reported: 0,
 		deaths: 0
-	},	
+	},
 	{
 		sourceLocation: [-77.04, 38.90],
         targetLocation: [85, 500],
@@ -482,7 +482,7 @@ var arcdata = [
         virus: "sudan"
 		,reported: 284,
 		deaths: 151
-	},		
+	},
 	{
         sourceLocation : [15.28, -4.27],
         targetLocation: [85, 500],
@@ -493,7 +493,7 @@ var arcdata = [
         virus: "zaire"
 		,reported: 318,
 		deaths: 280
-	},			
+	},
 	];
 
     var virusColor = {
@@ -581,9 +581,9 @@ d3.queue()
 function updateData(self, val){
 
     var button = self;
-   
-    if (button) 
-    {   
+
+    if (button)
+    {
         var id_b = "." + self.id;
         $(id_b).toggle();
     }
@@ -604,10 +604,10 @@ var i, count;
 count = 0;
 
 var years = [1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993,
-            1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 
+            1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
             2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018 ];
-var dataYears = [2018, 2017, 2014, 2012, 2011, 2008, 
-                2007, 2005, 2004, 2003, 2002, 2001, 2000, 
+var dataYears = [2018, 2017, 2014, 2012, 2011, 2008,
+                2007, 2005, 2004, 2003, 2002, 2001, 2000,
                 1996, 1995,1994, 1992, 1990, 1989, 1979,
                  1977, 1976];
 for (i in years){
@@ -623,7 +623,7 @@ g1.append("text")
     .style("fill","#2f3e51")
     .text(years[i]);
     if (dataYears.indexOf(years[i]) >= 0){
-        
+
          svg.append("path")
         .attr("width", "2000px")
         .style("fill", "#a8a9ad")
@@ -640,7 +640,7 @@ g1.append("text")
         .attr("d", rightRoundedRect(3 + count + i, 500,  1, 1, 0));
           }
     }
-  
+
     count = count + 25 ;
 
 }
@@ -653,7 +653,7 @@ svg.append("g")
     .attr("transform", "translate(0, -150)")
     .attr("d", path);
 
-        
+
 var arcs = svg.append("g");
 var thickArcs = svg.append("g");
 var names = svg.append("g");
@@ -688,8 +688,8 @@ for (var i in arcdata ){
         .style("stroke-width", ".5px")
         .style("fill", "url(#circles-1)")
        // .attr("transform", "translate(0, -150)")
-        .attr('d', function() { 
-            return poly(d, 'sourceLocation', 'targetLocation'); 
+        .attr('d', function() {
+            return poly(d, 'sourceLocation', 'targetLocation');
             });
     }
 }
@@ -708,7 +708,7 @@ names.selectAll("circle")
     .style("fill", "#c2b49a")
     .style("stroke-width", "1px")
     .attr("transform", "translate(0, -150)");
-    
+
 names.selectAll("text")
     .data(arcdata)
     .enter()
@@ -737,28 +737,28 @@ thickArcs.selectAll("path")
     })
     .style("stroke-width", "4px")
     .style("fill", "transparent")
-    .on("mouseover", function(d) {		
-        div.transition()		
-            .duration(200)		
-            .style("opacity", .9);		
-        div.html(d.name)	
-            .style("left", (d3.event.pageX) + "px")		
-            .style("top", (d3.event.pageY - 28) + "px");	
-        })					
-    .on("mouseout", function(d) {		
-        div.transition()		
-            .duration(500)		
-            .style("opacity", 0);	
+    .on("mouseover", function(d) {
+        div.transition()
+            .duration(200)
+            .style("opacity", .9);
+        div.html(d.name)
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY - 28) + "px");
+        })
+    .on("mouseout", function(d) {
+        div.transition()
+            .duration(500)
+            .style("opacity", 0);
     })
     // .attr("transform", "translate(0, -150)")
-    .attr('d', function(d) { 
-        return lngLatToArc(d, 'sourceLocation', 'targetLocation'); 
+    .attr('d', function(d) {
+        return lngLatToArc(d, 'sourceLocation', 'targetLocation');
         });
 
 
 // Define the div for the tooltip
-var div = d3.select("body").append("div")	
-    .attr("class", "tooltip")				
+var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
     .style("opacity", 0);
 
 arcs.selectAll("path")
@@ -768,29 +768,29 @@ arcs.selectAll("path")
     .attr("class",function(d){
         return "arcs" + " " +d.virus + " " + d.name + " " + d.continent
     })
-    .style("stroke",function(d){    
-        return virusColor[d.virus]   
+    .style("stroke",function(d){
+        return virusColor[d.virus]
     })
     .style("fill", "transparent")
-    .on("mouseover", function(d) {		
-        div.transition()		
-            .duration(200)		
-            .style("opacity", .9);		
-        div.html(d.name)	
-            .style("left", (d3.event.pageX) + "px")		
-            .style("top", (d3.event.pageY - 28) + "px");	
-        })					
-    .on("mouseout", function(d) {		
-        div.transition()		
-            .duration(500)		
-            .style("opacity", 0);	
+    .on("mouseover", function(d) {
+        div.transition()
+            .duration(200)
+            .style("opacity", .9);
+        div.html(d.name)
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY - 28) + "px");
+        })
+    .on("mouseout", function(d) {
+        div.transition()
+            .duration(500)
+            .style("opacity", 0);
     })
     // .attr("transform", "translate(0, -150)")
-    .attr('d', function(d) { 
-        return test(d, 'sourceLocation', 'targetLocation', 15); 
+    .attr('d', function(d) {
+        return test(d, 'sourceLocation', 'targetLocation', 15);
         });
 
- 
+
 
 }
 
@@ -802,14 +802,14 @@ function test(d, sourceName, targetName, bend){
                     .translate([width / 2, height / 2])
     var sourceXY = projection( [sourceLngLat[0], sourceLngLat[1]]),
             targetXY = projection( [targetLngLat[1] , targetLngLat[0]] );
-                        
+
     var sourceX = sourceXY[0]  ,
             sourceY = sourceXY[1] - 150;
 
     var targetX = (parseInt(d.year) - 1976 + 1)*25 - 10,
         targetY = targetLngLat[1];
-          
-    var midPoint1 = [Math.abs(-sourceX + targetX + 50)/2 , Math.abs(-sourceY + targetY )/2 -75 ]   
+
+    var midPoint1 = [Math.abs(-sourceX + targetX + 50)/2 , Math.abs(-sourceY + targetY )/2 -75 ]
 
     var startY = targetY -100;
     var startX = targetX + d.items *10;
@@ -820,7 +820,7 @@ function test(d, sourceName, targetName, bend){
     if (Math.abs(sourceX - startX) < 150){
 
         if (Math.abs(sourceX) >= Math.abs(startX)){
-            return "M" + startX + "," + startY 
+            return "M" + startX + "," + startY
             + "v" + (-midPoint1[1] - 50)
             + "a" + 50 + "," + -50 + " 0  0 1" + 50 + "," + -50
             + "h" + (a - 2 * 50)
@@ -829,7 +829,7 @@ function test(d, sourceName, targetName, bend){
             ;
         }
         else{
-        return "M" + startX + "," + startY 
+        return "M" + startX + "," + startY
         + "v" + (-midPoint1[1] - 50)
         + "a" + 50 + "," + -50 + " 0  0 1" + 50 + "," + -50
         + "h" + -(a - 2 * 50)
@@ -839,9 +839,9 @@ function test(d, sourceName, targetName, bend){
         }
           }
     else{
-      
+
         if (Math.abs(sourceX) >= Math.abs(startX)){
-            return "M" + startX + "," + startY 
+            return "M" + startX + "," + startY
             + "v" + (-midPoint1[1] - 50)
             + "a" + 50 + "," + -50 + " 0  0 1" + 50 + "," + -50
             + "h" + (a - 2 * 50)
@@ -851,8 +851,8 @@ function test(d, sourceName, targetName, bend){
 
         }
         else{
-          
-            return "M" + startX + "," + startY 
+
+            return "M" + startX + "," + startY
             + "v" + (-midPoint1[1] - 50)
             + "a" + -50 + "," + -50 + " 0  0 0" + -50 + "," + -50
             + "h" + -(a - 2 * 50)
@@ -862,8 +862,8 @@ function test(d, sourceName, targetName, bend){
 
         }}
 
-    
-        
+
+
 }
 
 
@@ -888,33 +888,32 @@ function lngLatToArc(d, sourceName, targetName, bend){
                 dy = targetY - 100,
                 dr = Math.sqrt(dx * dx + dy * dy);
         if (d.items != 0)
-        {   
+        {
             var bendY =  targetY - 10;
             return "M"  +targetX + "," + targetY + "," + "Q" +dx + "," + bendY + "," +dx + "," + dy  ;
         }
         else {
         return "M"  +targetX + "," + targetY + "," +dx + "," + dy  ;
-        
+
         }}
 
-    function poly(d, sourceName, targetName, bend){
-            bend = bend || 1;
-            var sourceLngLat = d[sourceName],
-                     targetLngLat = d[targetName];
-                var targetX = (parseInt(d.year) - 1976 + 1)*25 - 10,
-                    targetY = targetLngLat[1] - 6;
-        
-                var dx = targetX +  d.items *10,
-                        dy = targetY - 100,
-                        dr = Math.sqrt(dx * dx + dy * dy);
-                return "M" + dx+ ","+ dy
-                 + "L" + (dx-10) +","+ (dy-10)
-                 + "L" + (dx) +","+ (dy-20)  
-                 + "L" + (dx+10) +","+ (dy-10)
-                 + "z" 
-                //return "M5.9,1.2L0.7,6.5l5.2,5.4l5.2-5.4L5.9,1.2z"    
-                //return "M"  +targetX + "," + targetY + "," +dx + "," + dy  ;
-                
-                }
 
+  function poly(d, sourceName, targetName, bend){
+          bend = bend || 1;
+          var sourceLngLat = d[sourceName],
+                   targetLngLat = d[targetName];
+              var targetX = (parseInt(d.year) - 1976 + 1)*25 - 10,
+                  targetY = targetLngLat[1] - 6;
 
+              var dx = targetX +  d.items *10,
+                      dy = targetY - 100,
+                      dr = Math.sqrt(dx * dx + dy * dy);
+              return "M" + dx+ ","+ dy
+               + "L" + (dx-10) +","+ (dy-10)
+               + "L" + (dx) +","+ (dy-20)
+               + "L" + (dx+10) +","+ (dy-10)
+               + "z"
+              //return "M5.9,1.2L0.7,6.5l5.2,5.4l5.2-5.4L5.9,1.2z"
+              //return "M"  +targetX + "," + targetY + "," +dx + "," + dy  ;
+
+              }
