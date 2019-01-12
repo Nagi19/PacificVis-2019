@@ -1,19 +1,84 @@
-var svg3 =  d3.select(".ploycircle_test").append("svg").attr("width", 800).attr("height", 800);
+
+var svg_test =  d3.select(".ploycircle_test").append("svg").attr("width", 64).attr("height", 600).attr("id","test");
 
 
-var initCircle = [50,500]
-var radius = 2
-var unit = 5
-var sur = 53
-var death = 30
+
+var initCircle = [32,588]
 
 
-var circlegroup = svg3.append("g")
+polyCirleArray(svg_test,870,553,initCircle);
 
-circleArray(unit,initCircle,radius,sur,death,(70-sur-death))
 
-function circleArray(unit, initCircle,radius,surviveNumb,deathNumb,emptyNumb){
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+function polyCirleArray(svg,reported,sur,initCircle){
+
+      var circlegroup = svg.append("g")
+
+      var total_diamondNumb = Math.ceil(reported/96)
+      var sur_diamondNumb = Math.ceil(sur/96)
+      var sur_remainder    = sur % 96
+      var death_diamondNumb = Math.round(sur/96)
+
+      var radius = 2
+      var gap = 5
+
+      if (total_diamondNumb>1 && sur_diamondNumb>1) {
+
+        circleArray(gap,initCircle,96,0,circlegroup)
+
+        initCircle = [initCircle[0],initCircle[1]-62]
+
+        polyCirleArray(svg,reported-96,sur-96,initCircle);
+      }
+
+      if (total_diamondNumb >1 && sur_diamondNumb==1) {
+
+        circleArray(gap,initCircle,sur,96-sur,circlegroup)
+
+        initCircle = [initCircle[0],initCircle[1]-62]
+
+        polyCirleArray(svg,reported-96,0,initCircle);
+      }
+
+      if (total_diamondNumb > 1 && sur_diamondNumb == 0) {
+
+        circleArray(gap,initCircle,0,reported,circlegroup)
+
+        initCircle = [initCircle[0],initCircle[1]-62]
+
+        polyCirleArray(svg,reported-96,0,initCircle);
+      }
+
+      if (total_diamondNumb == 1 && sur_diamondNumb == 1) {
+
+        circleArray(gap,initCircle,sur,reported-sur,circlegroup)
+      }
+
+
+      if (total_diamondNumb == 1 && sur_diamondNumb == 0) {
+
+        circleArray(gap,initCircle,0,reported,circlegroup)
+
+      }
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+// here is only computing one circlesquad
+function circleArray(gap, initCircle,surviveNumb,deathNumb,circlegroup_svg){
       var counter = 3
+      var radius =5
 
       // this color counter is for later assigning color filling.
       var colorCounter = 0
@@ -23,14 +88,14 @@ function circleArray(unit, initCircle,radius,surviveNumb,deathNumb,emptyNumb){
           {
 
               var x = initCircle[0]
-              var y = initCircle[1] - a* unit;
+              var y = initCircle[1] - a* gap;
 
               if (a < 6) {
                 for (var b = 0; b < counter; b++) {
                  colorCounter ++;
 
-                 x = x + Math.pow((-1),b)*unit*b
-                      circlegroup.append("circle")
+                 x = x + Math.pow((-1),b)*gap*b
+                      circlegroup_svg.append("circle")
                         .attr("cx", x).attr("cy", y).attr("r", 2).style("fill", function(){if (colorCounter<surviveNumb+1) {
                           return "red";
                         }
@@ -53,8 +118,8 @@ function circleArray(unit, initCircle,radius,surviveNumb,deathNumb,emptyNumb){
                 counter = counter - 2;
                 for (var b = 0; b < counter; b++) {
                  colorCounter ++;
-                 x = x + Math.pow((-1),b)*unit*b
-                      circlegroup.append("circle")
+                 x = x + Math.pow((-1),b)*gap*b
+                      circlegroup_svg.append("circle")
                         .attr("cx", x).attr("cy", y).attr("r", 2).style("fill", function(){if (colorCounter<surviveNumb+1) {
                           return "red";
                         }
