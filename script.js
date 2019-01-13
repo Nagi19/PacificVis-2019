@@ -127,7 +127,7 @@ var arcdata = [
         ,name: "Uganda",
         continent: "africa",
         items: -1,
-        virus: "sudan"
+        virus: "sudanVirus"
 		,reported: 6,
 		deaths: 3
 	},
@@ -149,7 +149,7 @@ var arcdata = [
         ,name: "Uganda",
         continent: "africa",
         items: 1,
-        virus: "sudan"
+        virus: "sudanVirus"
 		,reported: 11,
 		deaths: 4
 	},
@@ -160,7 +160,7 @@ var arcdata = [
         ,name: "Uganda",
         continent: "africa",
         items: 0,
-        virus: "sudan"
+        virus: "sudanVirus"
 		,reported: 1,
 		deaths: 1
 	},
@@ -234,10 +234,10 @@ var arcdata = [
 		sourceLocation: [32.53, 15.55],
         targetLocation: [85, 500],
 		year : "2004"
-        ,name: "sudanCountry",
+        ,name: "Sudan",
         continent: "africa",
         items: 1,
-        virus: "sudan"
+        virus: "sudanVirus"
 		,reported: 17,
 		deaths: 7
 	},
@@ -292,7 +292,7 @@ var arcdata = [
         ,name: "Uganda",
         continent: "africa",
         items: 0,
-        virus: "sudan"
+        virus: "sudanVirus"
 		,reported: 425,
 		deaths: 224
 	},
@@ -377,7 +377,7 @@ var arcdata = [
 		sourceLocation: [-5.54, 7.54],
         targetLocation: [85, 500],
 		year : "1994"
-        ,name: "Cote Divoire",
+        ,name: "Cote d’Ivoire",
         continent: "africa",
         items: -1,
         virus: "taiForest"
@@ -443,10 +443,10 @@ var arcdata = [
 		sourceLocation: [32.53, 15.55],
         targetLocation: [85, 500],
 		year : "1979"
-        ,name: "sudanCountry",
+        ,name: "Sudan",
         continent: "africa",
         items: 0,
-        virus: "sudan"
+        virus: "sudanVirus"
 		,reported: 34,
 		deaths: 22
 	},
@@ -467,8 +467,8 @@ var arcdata = [
 		year : "1976"
         ,name: "England",
         continent: "europe",
-        items: -1,
-        virus: "sudan"
+        items: 0,
+        virus: "sudanVirus"
 		,reported: 1,
 		deaths: 0
 	},
@@ -476,10 +476,10 @@ var arcdata = [
 		sourceLocation: [32.53, 15.55],
         targetLocation: [85, 500],
 		year : "1976"
-        ,name: "sudanCountry",
+        ,name: "Sudan",
         continent: "africa",
-        items: -0,
-        virus: "sudan"
+        items: -1,
+        virus: "sudanVirus"
 		,reported: 284,
 		deaths: 151
 	},
@@ -499,7 +499,7 @@ var arcdata = [
     var virusColor = {
         "zaire" : "#ee4036",
         "reston" : "#2bb673",
-        "sudan" : "#00adef",
+        "sudanVirus" : "#00adef",
         "bundibugyo" : "#f9a33c",
         "taiForest" : "#d91b5b"
         };
@@ -520,62 +520,9 @@ var path = d3.geoPath()
 var data = d3.map();
 
 
-// Legend
-var g = svg.append("g")
-    .attr("transform", "translate(20,20)");
-
-g.append("text")
-    .attr("class", "caption")
-    .attr("x", 0)
-    .attr("y", 40)
-    .style("fill","#2f3e51")
-    .text("40 years of");
-
-g.append("text")
-    .attr("class", "caption")
-    .attr("x", 0)
-    .attr("y", 80)
-    .style("fill","#2f3e51")
-    .style("font-size", "40px")
-    .text("Ebola");
-
-var g2 = svg.append("g")
-    .attr("class", "summary")
-    .attr("transform", "translate(20,20)");
-
-g2.append("text")
-    .attr("x", 0)
-    .attr("y", 100)
-    .style("fill","#2f3e51")
-    .text("In 2014 the devastating Eboa Visrus became");
-
-g2.append("text")
-    .attr("x", 0)
-    .attr("y", 115)
-    .style("fill","#2f3e51")
-    .text("a Global Crisis. Today, there is a current out-");
-
-g2.append("text")
-    .attr("x", 0)
-    .attr("y", 131)
-    .style("fill","#2f3e51")
-    .text("break n Democratic Republic of Congo. Here");
-
-g2.append("text")
-    .attr("x", 0)
-    .attr("y", 145)
-    .style("fill","#2f3e51")
-    .text("is a look at the historic timelie of the disease");
-
-g2.append("text")
-    .attr("x", 0)
-    .attr("y", 160)
-    .style("fill","#2f3e51")
-    .text("since it was identified");
-
 
 d3.queue()
-    .defer(d3.json, "http://enjalot.github.io/wwsd/data/world/world-110m.geojson")
+    .defer(d3.json, "geo-map.json")
     .await(ready);
 
 function updateData(self, val){
@@ -621,13 +568,14 @@ g1.append("text")
     .attr("y", 510)
     .style("font-size", "8px")
     .style("fill","#2f3e51")
+    .attr("transform", "translate(0, 100)")
     .text(years[i]);
     if (dataYears.indexOf(years[i]) >= 0){
 
          svg.append("path")
         .attr("width", "2000px")
         .style("fill", "#a8a9ad")
-        // .attr("transform", "translate(0, -150)")
+        .attr("transform", "translate(0, 100)")
         .attr("d", rightRoundedRect(3 + count , 494,  24, 6, 4));
     }
     else{
@@ -636,7 +584,7 @@ g1.append("text")
         svg.append("path")
         .attr("width", "2000px")
         .style("fill", "#a8a9ad")
-        // .attr("transform", "translate(0, -150)")
+        .attr("transform", "translate(0, 100)")
         .attr("d", rightRoundedRect(3 + count + i, 500,  1, 1, 0));
           }
     }
@@ -657,40 +605,27 @@ svg.append("g")
 var arcs = svg.append("g");
 var thickArcs = svg.append("g");
 var names = svg.append("g");
-var polytest = svg.append("g");
+var polytest = svg.append("g").attr("class","test");
 
 
+svg.attr("transform", "scale(1.25)")
 for (var i in arcdata ){
-
-    // {
-	// 	sourceLocation: [37.62, 55.75],
-    //     targetLocation: [85, 500],
-	// 	year : "1996"
-    //     ,name: "Russia",
-    //     continent: "asia",
-    //     items: -3,
-    //     virus: "zaire"
-	// 	,reported: 1,
-	// 	deaths: 1
-	// }
-
+   
     var d = arcdata[i];
-    if (d.reported >=10){
-        var polytest = svg.append("g");
-        polytest
-        .append("path")
-        .attr("class",function(){
-            return "parcs" + " " +d.virus + " " + d.name + " " + d.continent
+    if (d) {
+    var initCircle = [32,588];
+    var a = polyCirleArray(polytest,d.reported,d.deaths,initCircle, d);
+    
+    var targetX = (parseInt(d.year) - 1976 + 1)*25 - 19,
+    targetY = d.targetLocation[1] ;
+
+    var dx = targetX +  d.items *10,
+        dy = targetY - 185 ;
+
+      a.attr("transform", "translate("+dx+ ","+ dy +") scale(0.3)")
+       .attr("class",function(){
+            return "names" + " " +d.virus + " " + d.name + " " + d.continent
         })
-        .style("stroke",function(){
-            return virusColor[d.virus]
-        })
-        .style("stroke-width", ".5px")
-        .style("fill", "url(#circles-1)")
-       // .attr("transform", "translate(0, -150)")
-        .attr('d', function() {
-            return poly(d, 'sourceLocation', 'targetLocation');
-            });
     }
 }
 
@@ -735,7 +670,17 @@ thickArcs.selectAll("path")
     .style("stroke",function(d){
         return virusColor[d.virus]
     })
-    .style("stroke-width", "4px")
+    .style("stroke-width", function(d){
+        if (d.reported  <= 10){
+            return "2px"
+        }
+        else if (d.reported <50)
+        {return (1 * (d.reported)/25) + "px" }
+        else if (d.reported <150)
+        {return (1 * (d.reported)/50) + "px" }
+        else
+        {return "8px" }
+    })
     .style("fill", "transparent")
     .on("mouseover", function(d) {
         div.transition()
@@ -750,7 +695,7 @@ thickArcs.selectAll("path")
             .duration(500)
             .style("opacity", 0);
     })
-    // .attr("transform", "translate(0, -150)")
+     .attr("transform", "translate(0, 100)")
     .attr('d', function(d) {
         return lngLatToArc(d, 'sourceLocation', 'targetLocation');
         });
@@ -771,6 +716,7 @@ arcs.selectAll("path")
     .style("stroke",function(d){
         return virusColor[d.virus]
     })
+    .style("stroke-width", "0.75px")
     .style("fill", "transparent")
     .on("mouseover", function(d) {
         div.transition()
@@ -785,7 +731,7 @@ arcs.selectAll("path")
             .duration(500)
             .style("opacity", 0);
     })
-    // .attr("transform", "translate(0, -150)")
+     .attr("transform", "translate(0, 100)")
     .attr('d', function(d) {
         return test(d, 'sourceLocation', 'targetLocation', 15);
         });
@@ -811,13 +757,36 @@ function test(d, sourceName, targetName, bend){
 
     var midPoint1 = [Math.abs(-sourceX + targetX + 50)/2 , Math.abs(-sourceY + targetY )/2 -75 ]
 
-    var startY = targetY -100;
+    var startY = targetY -110 - d.reported/5;
     var startX = targetX + d.items *10;
 
     var a = Math.abs(sourceX - startX);
     var b = Math.abs(sourceY - startY);
 
-    if (Math.abs(sourceX - startX) < 150){
+
+    if(Math.abs(Math.abs(sourceX) - Math.abs(startX)) < 40){
+       
+       if (sourceX > startX) {
+            return "M" + startX + "," + startY
+            + "v" + (-midPoint1[1] - 10)
+            + "a" + 10 + "," + -10 + " 0  0 1" + 10 + "," + -10
+            + "h" + (a - 2 * 10)
+            + "a" + 10 + "," + -10 + " 0  0 0 " + 10 + "," + -10
+            + "v" + (-b + midPoint1[1] + - 80 )
+            ;}
+        else {
+
+            return "M" + startX + "," + startY
+            + "v" + (-midPoint1[1] - 1)
+            + "a" + -10 + "," + -10 + " 0  0 0" + -10 + "," + -10
+            + "h" + -(a - 2 * 10)
+            + "a" + -10 + "," + -10 + " 0  0 1 " + -10 + "," + -10
+            + "v" + -(b - midPoint1[1] + 80 )
+            ;
+        }
+    }
+
+    else if (Math.abs(Math.abs(sourceX) - Math.abs(startX)) < 50){
 
         if (Math.abs(sourceX) >= Math.abs(startX)){
             return "M" + startX + "," + startY
@@ -825,17 +794,18 @@ function test(d, sourceName, targetName, bend){
             + "a" + 50 + "," + -50 + " 0  0 1" + 50 + "," + -50
             + "h" + (a - 2 * 50)
             + "a" + 50 + "," + -50 + " 0  0 0 " + 50 + "," + -50
-            + "v" + (-b + midPoint1[1] +150 )
+            + "v" + (-b + midPoint1[1] +50 )
             ;
         }
+        
         else{
-        return "M" + startX + "," + startY
-        + "v" + (-midPoint1[1] - 50)
-        + "a" + 50 + "," + -50 + " 0  0 1" + 50 + "," + -50
-        + "h" + -(a - 2 * 50)
-        + "a" + 50 + "," + -50 + " 0  0 0 " + 50 + "," + -50
-        + "v" + (-b + midPoint1[1] +150 )
-        ;
+                return "M" + startX + "," + startY
+                + "v" + (-midPoint1[1] - 50)
+                + "a" + 50 + "," + -50 + " 0  0 1" + 50 + "," + -50
+                + "h" + -(a - 2 * 50)
+                + "a" + 50 + "," + -50 + " 0  0 0 " + 50 + "," + -50
+                + "v" + (-b + midPoint1[1] + 50 )
+                ;
         }
           }
     else{
@@ -846,7 +816,7 @@ function test(d, sourceName, targetName, bend){
             + "a" + 50 + "," + -50 + " 0  0 1" + 50 + "," + -50
             + "h" + (a - 2 * 50)
             + "a" + 50 + "," + -50 + " 0  0 0 " + 50 + "," + -50
-            + "v" + -(b - midPoint1[1] - 150 )
+            + "v" + -(b - midPoint1[1] - 50 )
             ;
 
         }
@@ -857,7 +827,7 @@ function test(d, sourceName, targetName, bend){
             + "a" + -50 + "," + -50 + " 0  0 0" + -50 + "," + -50
             + "h" + -(a - 2 * 50)
             + "a" + -50 + "," + -50 + " 0  0 1 " + -50 + "," + -50
-            + "v" + -(b - midPoint1[1] - 150 )
+            + "v" + -(b - midPoint1[1] - 50 )
             ;
 
         }}
@@ -898,22 +868,4 @@ function lngLatToArc(d, sourceName, targetName, bend){
         }}
 
 
-  function poly(d, sourceName, targetName, bend){
-          bend = bend || 1;
-          var sourceLngLat = d[sourceName],
-                   targetLngLat = d[targetName];
-              var targetX = (parseInt(d.year) - 1976 + 1)*25 - 10,
-                  targetY = targetLngLat[1] - 6;
 
-              var dx = targetX +  d.items *10,
-                      dy = targetY - 100,
-                      dr = Math.sqrt(dx * dx + dy * dy);
-              return "M" + dx+ ","+ dy
-               + "L" + (dx-10) +","+ (dy-10)
-               + "L" + (dx) +","+ (dy-20)
-               + "L" + (dx+10) +","+ (dy-10)
-               + "z"
-              //return "M5.9,1.2L0.7,6.5l5.2,5.4l5.2-5.4L5.9,1.2z"
-              //return "M"  +targetX + "," + targetY + "," +dx + "," + dy  ;
-
-              }
