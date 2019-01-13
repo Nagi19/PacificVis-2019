@@ -664,6 +664,7 @@ thickArcs.selectAll("path")
     .data(arcdata)
     .enter()
     .append("path")
+    .style("opacity", .9)
     .attr("class",function(d){
         return "tarcs" + " " +d.virus + " " + d.name + " " + d.continent
     })
@@ -716,6 +717,7 @@ arcs.selectAll("path")
     .style("stroke",function(d){
         return virusColor[d.virus]
     })
+    .style("opacity", .6)
     .style("stroke-width", "0.75px")
     .style("fill", "transparent")
     .on("mouseover", function(d) {

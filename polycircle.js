@@ -71,7 +71,7 @@ function polyCirleArray(svg,reported,sur,initCircle, d){
 // here is only computing one circlesquad
 function circleArray(gap, initCircle,surviveNumb,deathNumb,circlegroup_svg){
       var counter = 3
-      var radius = 2
+      var radius = 1.5
 
       // this color counter is for later assigning color filling.
       var colorCounter = 0
