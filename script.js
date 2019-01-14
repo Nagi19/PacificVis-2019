@@ -1,3 +1,23 @@
+var countries = {"Cote Divoire" : [-5.54, 7.54]
+,"Congo" :  [15.28, -4.27]
+,"England": [-0.13, 51.51]
+,"Gabon": [9.45, 0.39]
+,"Guniea": [-9.69, 9.95]
+,"Italy": [12.48, 41.89]
+,"Liberia": [-9.4, 6.45]
+,"Mali": [-8.00, 12.65]
+,"Nigeria": [7.49, 9.06]
+,"Phillipines": [120.98, 14.60]
+,"Russia": [37.62, 55.75]
+,"Senegal": [-17.44, 14.69]
+,"Sierra Leone": [-11.98, 8.4]
+,"South Africa": [18.42, -33.93]
+,"Spain": [-3.70, 40.42]
+,"Sudan": [32.53, 15.55]
+,"Uganda": [32.58, 0.32]
+,"USA": [-77.04, 38.90]
+}
+
 var arcdata = [
 	{
 		sourceLocation: [15.28, -4.27],
@@ -598,6 +618,20 @@ svg.append("g")
     .selectAll("path")
     .data(topo.features)
     .enter().append("path")
+    .style("stroke", function(d){
+        if (Object.keys(countries).includes(d.properties.name ))
+        
+        {
+            return "#c6ad8e"
+        }
+    })
+    .style("stroke-width", function(d){
+        if (Object.keys(countries).includes(d.properties.name ))
+        
+        {
+            return "0.3px"
+        }
+    })
     .attr("transform", "translate(0, -150)")
     .attr("d", path);
 
@@ -608,7 +642,7 @@ var names = svg.append("g");
 var polytest = svg.append("g").attr("class","test");
 
 
-svg.attr("transform", "scale(1.25)")
+svg.attr("transform", "scale(1.15)")
 for (var i in arcdata ){
    
     var d = arcdata[i];
@@ -721,6 +755,16 @@ arcs.selectAll("path")
     .style("stroke-width", "0.75px")
     .style("fill", "transparent")
     .on("mouseover", function(d) {
+        // this.setAttribute("style",
+        // '{"stroke": "#fff", \
+        // "stroke-width": "1.75px",\
+        // "opacity" : .6,\
+        // "fill" : "transparent"\
+        //     }');
+        this.setAttribute("stroke", "#fff")
+        // this.setAttribute("fill", "trasparent")
+        // this.setAttribute("opacity", "1")
+
         div.transition()
             .duration(200)
             .style("opacity", .9);
@@ -729,6 +773,9 @@ arcs.selectAll("path")
             .style("top", (d3.event.pageY - 28) + "px");
         })
     .on("mouseout", function(d) {
+        this.setAttribute("stroke", virusColor[d.virus])
+        // this.setAttribute("fill", "trasparent")
+        // this.setAttribute("opacity", "1")
         div.transition()
             .duration(500)
             .style("opacity", 0);
@@ -859,10 +906,15 @@ function lngLatToArc(d, sourceName, targetName, bend){
         var dx = targetX +  d.items *10,
                 dy = targetY - 100,
                 dr = Math.sqrt(dx * dx + dy * dy);
-        if (d.items != 0)
+        if (d.items < 0)
         {
             var bendY =  targetY - 10;
-            return "M"  +targetX + "," + targetY + "," + "Q" +dx + "," + bendY + "," +dx + "," + dy  ;
+            return "M"  +targetX + "," + targetY + "," + "C" + targetX + "," + bendY + "," + dx + "," + bendY + "," +dx + "," + dy  ;
+        }
+        else if (d.items > 0)
+        {
+            var bendY =  targetY - 10;
+            return "M"  +targetX + "," + targetY + "," + "C" + targetX + "," + bendY + "," + dx + "," + bendY + "," +dx + "," + dy  ;
         }
         else {
         return "M"  +targetX + "," + targetY + "," +dx + "," + dy  ;
