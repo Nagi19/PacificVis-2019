@@ -620,14 +620,14 @@ svg.append("g")
     .enter().append("path")
     .style("stroke", function(d){
         if (Object.keys(countries).includes(d.properties.name ))
-        
+
         {
             return "#c6ad8e"
         }
     })
     .style("stroke-width", function(d){
         if (Object.keys(countries).includes(d.properties.name ))
-        
+
         {
             return "0.3px"
         }
@@ -644,12 +644,12 @@ var polytest = svg.append("g").attr("class","test");
 
 svg.attr("transform", "scale(1.15)")
 for (var i in arcdata ){
-   
+
     var d = arcdata[i];
     if (d) {
     var initCircle = [32,588];
     var a = polyCirleArray(polytest,d.reported,d.deaths,initCircle, d);
-    
+
     var targetX = (parseInt(d.year) - 1976 + 1)*25 - 19,
     targetY = d.targetLocation[1] ;
 
@@ -658,7 +658,7 @@ for (var i in arcdata ){
 
       a.attr("transform", "translate("+dx+ ","+ dy +") scale(0.3)")
        .attr("class",function(){
-            return "names" + " " +d.virus + " " + d.name + " " + d.continent
+            return "names" + " " +d.virus + " " + d.name + " " + d.continent+ " " +"y"+d.year
         })
     }
 }
@@ -668,7 +668,7 @@ names.selectAll("circle")
     .enter()
     .append("circle")
     .attr("class",function(d){
-        return "circles" + " " +d.virus + " " + d.name + " " + d.continent
+        return "circles" + " " +d.virus + " " + d.name + " " + d.continent+ " " +"y"+d.year
     })
     .attr("cx", function (d) { return projection(d.sourceLocation)[0] ; })
     .attr("cy", function (d) { return projection(d.sourceLocation)[1] ; })
@@ -683,7 +683,7 @@ names.selectAll("text")
     .enter()
     .append("text")
     .attr("class",function(d){
-        return "names" + " " +d.virus + " " + d.name + " " + d.continent
+        return "names" + " " +d.virus + " " + d.name + " " + d.continent+ " " +"y"+d.year
     })
     .attr("x", function (d) { return projection(d.sourceLocation)[0] + 5; })
     .attr("y", function (d) { return projection(d.sourceLocation)[1] - 5; })
@@ -698,9 +698,9 @@ thickArcs.selectAll("path")
     .data(arcdata)
     .enter()
     .append("path")
-    .style("opacity", .9)
+    // .style("opacity", .9)
     .attr("class",function(d){
-        return "tarcs" + " " +d.virus + " " + d.name + " " + d.continent
+        return "tarcs" + " " +d.virus + " " + d.name + " " + d.continent+ " " +"y"+d.year
     })
     .style("stroke",function(d){
         return virusColor[d.virus]
@@ -718,6 +718,7 @@ thickArcs.selectAll("path")
     })
     .style("fill", "transparent")
     .on("mouseover", function(d) {
+
         div.transition()
             .duration(200)
             .style("opacity", .9);
@@ -730,6 +731,60 @@ thickArcs.selectAll("path")
             .duration(500)
             .style("opacity", 0);
     })
+		.on("click",function(d){
+
+		var selectTPath = 	d3.select(this)
+		var clickClassName = selectTPath.attr("class");
+		if (clickClassName.includes("select")) {
+			console.log("YES");
+			var selected = $('*[class^="select"]')
+			for (var i = 0; i < selected.length; i++) {
+				var name = selected[i].getAttribute("class");
+				name = name.substr(7)
+				selected[i].setAttribute("class",name);
+
+				var arcsFade = $("path[class^='arcs']")
+				var tarcsFade = $("path[class^='tarcs']")
+				var circleFade = $("g[class^='names']")
+
+				
+				arcsFade.fadeTo(300, 1);
+				tarcsFade.fadeTo(300, 1);
+				circleFade.fadeTo(300, 1);
+			}
+		}
+		else {
+			selectTPath.attr("class","select "+clickClassName);
+
+			var nameString = clickClassName.substr(1)
+
+			nameString = nameString.split(' ').join('.')
+
+			var selectPath = d3.select("path."+nameString);
+			var pName = selectPath.attr("class")
+			selectPath.attr("class","select "+pName);
+
+			nameString = nameString.substr(5)
+			nameString = "names."+nameString
+
+
+			var selectG = d3.select("g."+nameString);
+			var GName = selectG.attr("class")
+			selectG.attr("class","select "+GName);
+
+			// .attr("class","mouseoverTp");
+			var arcsFade = $("path[class^='arcs']")
+			var tarcsFade = $("path[class^='tarcs']")
+			var circleFade = $("g[class^='names']")
+
+			arcsFade.fadeTo(300, 0.2);
+			tarcsFade.fadeTo(300, 0.2);
+			circleFade.fadeTo(300, 0.2);
+
+		}
+
+
+		})
      .attr("transform", "translate(0, 100)")
     .attr('d', function(d) {
         return lngLatToArc(d, 'sourceLocation', 'targetLocation');
@@ -746,12 +801,11 @@ arcs.selectAll("path")
     .enter()
     .append("path")
     .attr("class",function(d){
-        return "arcs" + " " +d.virus + " " + d.name + " " + d.continent
+        return "arcs" + " " +d.virus + " " + d.name + " " + d.continent +" " + "y" +d.year
     })
     .style("stroke",function(d){
         return virusColor[d.virus]
     })
-    .style("opacity", .6)
     .style("stroke-width", "0.75px")
     .style("fill", "transparent")
     .on("mouseover", function(d) {
@@ -814,7 +868,7 @@ function test(d, sourceName, targetName, bend){
 
 
     if(Math.abs(Math.abs(sourceX) - Math.abs(startX)) < 40){
-       
+
        if (sourceX > startX) {
             return "M" + startX + "," + startY
             + "v" + (-midPoint1[1] - 10)
@@ -846,7 +900,7 @@ function test(d, sourceName, targetName, bend){
             + "v" + (-b + midPoint1[1] +50 )
             ;
         }
-        
+
         else{
                 return "M" + startX + "," + startY
                 + "v" + (-midPoint1[1] - 50)
@@ -920,6 +974,3 @@ function lngLatToArc(d, sourceName, targetName, bend){
         return "M"  +targetX + "," + targetY + "," +dx + "," + dy  ;
 
         }}
-
-
-
