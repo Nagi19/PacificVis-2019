@@ -67,7 +67,7 @@ var arcdata = [
 		sourceLocation: [-15.98, 18.09],
         targetLocation: [85, 500],
 		year : "2014"
-        ,name: "West africa",
+        ,name: "West Africa",
         continent: "africa",
         items: -3,
         virus: "zaire"
@@ -647,20 +647,38 @@ for (var i in arcdata ){
 
     var d = arcdata[i];
     if (d) {
-    var initCircle = [32,588];
-    var a = polyCirleArray(polytest,d.reported,d.deaths,initCircle, d);
+        if(d.year == 2014 && d.name == "West Africa") {
+        var initCircle = [32,588];
+        var a = polyCirleArray(polytest,d.reported/50,d.deaths/50,initCircle, d);
+        
+        var targetX = (parseInt(d.year) - 1976 + 1)*25 - 25,
+        targetY = d.targetLocation[1] ;
 
-    var targetX = (parseInt(d.year) - 1976 + 1)*25 - 19,
-    targetY = d.targetLocation[1] ;
+        var dx = targetX +  d.items *10,
+            dy = targetY - 250;
 
-    var dx = targetX +  d.items *10,
-        dy = targetY - 185 ;
-
-      a.attr("transform", "translate("+dx+ ","+ dy +") scale(0.3)")
-       .attr("class",function(){
-            return "names" + " " +d.virus + " " + d.name + " " + d.continent+ " " +"y"+d.year
-        })
+        a.attr("transform", "translate("+dx+ ","+ dy +") scale(0.4)")
+        .attr("class",function(){
+                return "names" + " " +d.virus + " " + d.name + " " + d.continent+ " " +"y"+d.year
+            })
     }
+    else {
+        var initCircle = [32,588];
+        var a = polyCirleArray(polytest,d.reported,d.deaths,initCircle, d);
+        
+        var targetX = (parseInt(d.year) - 1976 + 1)*25 - 19,
+        targetY = d.targetLocation[1] ;
+
+        var dx = targetX +  d.items *10,
+            dy = targetY - 185 ;
+
+        a.attr("transform", "translate("+dx+ ","+ dy +") scale(0.3)")
+        .attr("class",function(){
+                return "names" + " " +d.virus + " " + d.name + " " + d.continent+ " " +"y"+d.year
+            })
+    }
+
+}
 }
 
 names.selectAll("circle")
@@ -698,23 +716,23 @@ thickArcs.selectAll("path")
     .data(arcdata)
     .enter()
     .append("path")
-    // .style("opacity", .9)
     .attr("class",function(d){
         return "tarcs" + " " +d.virus + " " + d.name + " " + d.continent+ " " +"y"+d.year
     })
     .style("stroke",function(d){
         return virusColor[d.virus]
     })
+    .style("opacity", "0.9")
     .style("stroke-width", function(d){
         if (d.reported  <= 10){
             return "2px"
         }
         else if (d.reported <50)
-        {return (1 * (d.reported)/25) + "px" }
-        else if (d.reported <150)
-        {return (1 * (d.reported)/50) + "px" }
+        {return  (d.reported)/35 + "px" }
+        else if (d.reported <200)
+        {return (0.5 * (Math.sqrt(d.reported))) + "px" }
         else
-        {return "8px" }
+        {return "10px" }
     })
     .style("fill", "transparent")
     .on("mouseover", function(d) {
@@ -736,7 +754,6 @@ thickArcs.selectAll("path")
 		var selectTPath = 	d3.select(this)
 		var clickClassName = selectTPath.attr("class");
 		if (clickClassName.includes("select")) {
-			console.log("YES");
 			var selected = $('*[class^="select"]')
 			for (var i = 0; i < selected.length; i++) {
 				var name = selected[i].getAttribute("class");
@@ -748,8 +765,8 @@ thickArcs.selectAll("path")
 				var circleFade = $("g[class^='names']")
 
 				
-				arcsFade.fadeTo(300, 1);
-				tarcsFade.fadeTo(300, 1);
+				arcsFade.fadeTo(300, 0.7);
+				tarcsFade.fadeTo(300, 0.9);
 				circleFade.fadeTo(300, 1);
 			}
 		}
@@ -772,7 +789,6 @@ thickArcs.selectAll("path")
 			var GName = selectG.attr("class")
 			selectG.attr("class","select "+GName);
 
-			// .attr("class","mouseoverTp");
 			var arcsFade = $("path[class^='arcs']")
 			var tarcsFade = $("path[class^='tarcs']")
 			var circleFade = $("g[class^='names']")
@@ -782,8 +798,6 @@ thickArcs.selectAll("path")
 			circleFade.fadeTo(300, 0.2);
 
 		}
-
-
 		})
      .attr("transform", "translate(0, 100)")
     .attr('d', function(d) {
@@ -807,43 +821,55 @@ arcs.selectAll("path")
         return virusColor[d.virus]
     })
     .style("stroke-width", "0.75px")
+    .style("opacity", "0.7")
     .style("fill", "transparent")
     .on("mouseover", function(d) {
-        // this.setAttribute("style",
-        // '{"stroke": "#fff", \
-        // "stroke-width": "1.75px",\
-        // "opacity" : .6,\
-        // "fill" : "transparent"\
-        //     }');
+        var text = "<div style = 'font-size: 13px;text-align:left'>" + d.name + "</div> " + 
+        "<div class = 'row'>\
+        <div class = 'col-6'>\
+                <div style = 'text-align:left'> Deaths</div>\
+                <div style = 'text-align:center'>\
+                    <p style = 'float:left;color:#f00;text-align:right'>&#9679;</p>\
+                    <div style = 'float:right;text-align:left'>" +   d.deaths  + "</div>\
+                </div>\
+        </div>" + 
+        
+        "<div class = 'col-6'>\
+                <div style = 'text-align:left'> Reported</div>\
+                <div style = 'text-align:center'>\
+                    <p style = 'float:left;color:#000;text-align:right'>&#9679;</p>\
+                    <div style = 'float:right;text-align:left'>" +   d.reported  + "</div>\
+                </div>\
+        </div>"       +
+        "</div>"  
+        
         this.setAttribute("stroke", "#fff")
-        // this.setAttribute("fill", "trasparent")
-        // this.setAttribute("opacity", "1")
-
         div.transition()
             .duration(200)
             .style("opacity", .9);
-        div.html(d.name)
+        div.html(text)
             .style("left", (d3.event.pageX) + "px")
+            .style("font-size", "9px")
             .style("top", (d3.event.pageY - 28) + "px");
         })
     .on("mouseout", function(d) {
         this.setAttribute("stroke", virusColor[d.virus])
-        // this.setAttribute("fill", "trasparent")
-        // this.setAttribute("opacity", "1")
         div.transition()
             .duration(500)
             .style("opacity", 0);
     })
      .attr("transform", "translate(0, 100)")
     .attr('d', function(d) {
-        return test(d, 'sourceLocation', 'targetLocation', 15);
+        return thinLines(d, 'sourceLocation', 'targetLocation', 15);
         });
-
-
 
 }
 
-function test(d, sourceName, targetName, bend){
+function thinLines(d, sourceName, targetName, bend){
+
+
+    
+
     var sourceLngLat = d[sourceName],
              targetLngLat = d[targetName];
     var projection = d3.geoNaturalEarth()
@@ -860,12 +886,25 @@ function test(d, sourceName, targetName, bend){
 
     var midPoint1 = [Math.abs(-sourceX + targetX + 50)/2 , Math.abs(-sourceY + targetY )/2 -75 ]
 
-    var startY = targetY -110 - d.reported/5;
+    if (d.year == 2014 && d.name == "West Africa") {
+        var startY =  - targetY + 165  + d.reported/50;
+    }
+    else if(d.reported == "ongoing") {
+        var startY = targetY -110 ;
+    }
+    else{
+        var startY = targetY -110 - d.reported/5;
+    }
     var startX = targetX + d.items *10;
+
+
+    var midPoint1 = [Math.abs(-sourceX + targetX + 50)/2 , Math.abs(-sourceY + startY )/2 -75 ]
+
 
     var a = Math.abs(sourceX - startX);
     var b = Math.abs(sourceY - startY);
 
+    
 
     if(Math.abs(Math.abs(sourceX) - Math.abs(startX)) < 40){
 
@@ -934,10 +973,7 @@ function test(d, sourceName, targetName, bend){
             ;
 
         }}
-
-
-
-}
+    }
 
 
 function rightRoundedRect(x, y, width, height, radius, year) {

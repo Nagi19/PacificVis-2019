@@ -19,7 +19,7 @@ function polyCirleArray(svg,reported,sur,initCircle, d){
 
       if (total_diamondNumb>1 && sur_diamondNumb>1) {
 
-        circleArray(gap,initCircle,96,0,circlegroup)
+        circleArray(gap,initCircle,96,0,circlegroup,d)
 
         initCircle = [initCircle[0],initCircle[1]-62]
 
@@ -28,7 +28,7 @@ function polyCirleArray(svg,reported,sur,initCircle, d){
 
       if (total_diamondNumb >1 && sur_diamondNumb==1) {
 
-        circleArray(gap,initCircle,sur,96-sur,circlegroup)
+        circleArray(gap,initCircle,sur,96-sur,circlegroup,d)
 
         initCircle = [initCircle[0],initCircle[1]-62]
 
@@ -37,7 +37,7 @@ function polyCirleArray(svg,reported,sur,initCircle, d){
 
       if (total_diamondNumb > 1 && sur_diamondNumb == 0) {
 
-        circleArray(gap,initCircle,0,reported,circlegroup)
+        circleArray(gap,initCircle,0,reported,circlegroup,d)
 
         initCircle = [initCircle[0],initCircle[1]-62]
 
@@ -46,30 +46,23 @@ function polyCirleArray(svg,reported,sur,initCircle, d){
 
       if (total_diamondNumb == 1 && sur_diamondNumb == 1) {
 
-        circleArray(gap,initCircle,sur,reported-sur,circlegroup)
+        circleArray(gap,initCircle,sur,reported-sur,circlegroup,d)
       }
 
 
       if (total_diamondNumb == 1 && sur_diamondNumb == 0) {
 
-        circleArray(gap,initCircle,0,reported,circlegroup)
+        circleArray(gap,initCircle,0,reported,circlegroup,d)
 
       }
-
-      
       return circlegroup;
-
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 
 // here is only computing one circlesquad
-function circleArray(gap, initCircle,surviveNumb,deathNumb,circlegroup_svg){
+function circleArray(gap, initCircle,surviveNumb,deathNumb,circlegroup_svg,d){
       var counter = 3
       var radius = 1.5
 
@@ -89,18 +82,27 @@ function circleArray(gap, initCircle,surviveNumb,deathNumb,circlegroup_svg){
 
                  x = x + Math.pow((-1),b)*gap*b
                       circlegroup_svg.append("circle")
-                        .attr("cx", x).attr("cy", y).attr("r", radius).style("fill", function(){if (colorCounter<surviveNumb+1) {
+                        .attr("cx", x).attr("cy", y).attr("r", radius).style("fill", function(){
+                        if(d.year == 2014 && d.reported == 28610){
+                          if (colorCounter<surviveNumb+1) {
+                            return "#dc4f84";
+                          }
+                          else if (colorCounter<(surviveNumb+deathNumb+1)&& colorCounter>surviveNumb) {
+                            return "black";
+                          }
+                          else {
+                            return "#dc4f84";
+                          }
+                        }  
+                        else {if (colorCounter<surviveNumb+1) {
                           return "red";
                         }
-
                         else if (colorCounter<(surviveNumb+deathNumb+1)&& colorCounter>surviveNumb) {
-
                           return "black";
                         }
-
                         else {
                           return "none";
-                        }});
+                        }}});
 
                 }
                 counter = counter +2;
@@ -113,18 +115,27 @@ function circleArray(gap, initCircle,surviveNumb,deathNumb,circlegroup_svg){
                  colorCounter ++;
                  x = x + Math.pow((-1),b)*gap*b
                       circlegroup_svg.append("circle")
-                        .attr("cx", x).attr("cy", y).attr("r", radius).style("fill", function(){if (colorCounter<surviveNumb+1) {
-                          return "red";
-                        }
-
-                        else if (colorCounter<(surviveNumb+deathNumb+1)&& colorCounter>surviveNumb) {
-
-                          return "black";
-                        }
-
-                        else {
-                          return "none";
-                        }});;
+                        .attr("cx", x).attr("cy", y).attr("r", radius).style("fill", function(){
+                          if(d.year == 2014 && d.name == "West Africa"){
+                            if (colorCounter<surviveNumb+1) {
+                              return "#dc4f84";
+                            }
+                            else if (colorCounter<(surviveNumb+deathNumb+1)&& colorCounter>surviveNumb) {
+                              return "black";
+                            }
+                            else {
+                              return "none";
+                            }
+                          }  
+                          else {if (colorCounter<surviveNumb+1) {
+                            return "red";
+                          }
+                          else if (colorCounter<(surviveNumb+deathNumb+1)&& colorCounter>surviveNumb) {
+                            return "black";
+                          }
+                          else {
+                            return "none";
+                          }}});
                 }
 
               }
