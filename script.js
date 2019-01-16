@@ -736,11 +736,30 @@ thickArcs.selectAll("path")
     })
     .style("fill", "transparent")
     .on("mouseover", function(d) {
+        var per = Math.floor((d.deaths/d.reported)*100)
+        var text = "<div style = 'font-size: 13px;text-align:left'>" + d.name + "  " + per + "%" + "</div> " + 
+        "<div class = 'row'>\
+        <div class = 'col-6'>\
+                <div style = 'text-align:left'> Deaths</div>\
+                <div style = 'text-align:center'>\
+                    <p style = 'width:10px;float:left;color:#f00;text-align:right'>&#9679;</p>\
+                    <div style = 'float:right;text-align:left'>" +   d.deaths  + "</div>\
+                </div>\
+        </div>" + 
+        
+        "<div class = 'col-6'>\
+                <div style = 'text-align:left'> Reported</div>\
+                <div style = 'text-align:center'>\
+                    <p style = 'width:10px;float:left;color:#000;text-align:right'>&#9679;</p>\
+                    <div style = 'float:right;text-align:left'>" +   d.reported  + "</div>\
+                </div>\
+        </div>"       +
+        "</div>"  
 
         div.transition()
             .duration(200)
             .style("opacity", .9);
-        div.html(d.name)
+        div.html(text)
             .style("left", (d3.event.pageX) + "px")
             .style("top", (d3.event.pageY - 28) + "px");
         })
@@ -824,7 +843,8 @@ arcs.selectAll("path")
     .style("opacity", "0.7")
     .style("fill", "transparent")
     .on("mouseover", function(d) {
-        var text = "<div style = 'font-size: 13px;text-align:left'>" + d.name + "</div> " + 
+        var per = Math.floor((d.deaths/d.reported)*100)
+        var text = "<div style = 'font-size: 13px;text-align:left'>" + d.name +" " + per+"%" +  "</div> " + 
         "<div class = 'row'>\
         <div class = 'col-6'>\
                 <div style = 'text-align:left'> Deaths</div>\
