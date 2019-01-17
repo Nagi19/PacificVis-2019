@@ -69,7 +69,7 @@ var arcdata = [
 		year : "2014"
         ,name: "West Africa",
         continent: "africa",
-        items: -3,
+        items: 0,
         virus: "zaire"
 		,reported: 28610,
 		deaths: 11308
@@ -80,7 +80,7 @@ var arcdata = [
 		year : "2014"
         ,name: "Italy",
         continent: "europe",
-        items: -2,
+        items: -3,
         virus: "zaire"
 		,reported: 1,
 		deaths: 0
@@ -91,7 +91,7 @@ var arcdata = [
 		year : "2014"
         ,name: "Mali",
         continent: "africa",
-        items: -1,
+        items: -2,
         virus: "zaire"
 		,reported: 8,
 		deaths: 6
@@ -102,7 +102,7 @@ var arcdata = [
 		year : "2014"
         ,name: "Nigeria",
         continent: "africa",
-        items: 1,
+        items: 2,
         virus: "zaire"
 		,reported: 20,
 		deaths: 8
@@ -113,7 +113,7 @@ var arcdata = [
 		year : "2014"
         ,name: "Senegal",
         continent: "africa",
-        items: 2,
+        items: 3,
         virus: "zaire"
 		,reported: 1,
 		deaths: 0
@@ -124,7 +124,7 @@ var arcdata = [
 		year : "2014"
         ,name: "Spain",
         continent: "europe",
-        items: 3,
+        items: 4,
         virus: "zaire"
 		,reported: 1,
 		deaths: 0
@@ -135,7 +135,7 @@ var arcdata = [
 		year : "2014"
         ,name: "USA",
         continent: "nAmerica",
-        items: 3,
+        items: 5,
         virus: "zaire"
 		,reported: 4,
 		deaths: 1
@@ -651,11 +651,11 @@ for (var i in arcdata ){
         var initCircle = [32,588];
         var a = polyCirleArray(polytest,d.reported/50,d.deaths/50,initCircle, d);
         
-        var targetX = (parseInt(d.year) - 1976 + 1)*25 - 25,
+        var targetX = (parseInt(d.year) - 1976 + 1)*25 - 24,
         targetY = d.targetLocation[1] ;
 
         var dx = targetX +  d.items *10,
-            dy = targetY - 250;
+            dy = targetY - 245;
 
         a.attr("transform", "translate("+dx+ ","+ dy +") scale(0.4)")
         .attr("class",function(){
@@ -812,9 +812,9 @@ thickArcs.selectAll("path")
 			var tarcsFade = $("path[class^='tarcs']")
 			var circleFade = $("g[class^='names']")
 
-			arcsFade.fadeTo(300, 0.2);
-			tarcsFade.fadeTo(300, 0.2);
-			circleFade.fadeTo(300, 0.2);
+			arcsFade.fadeTo(300, 0.1);
+			tarcsFade.fadeTo(300, 0.1);
+			circleFade.fadeTo(300, 0.1);
 
 		}
 		})
