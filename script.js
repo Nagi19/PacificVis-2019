@@ -544,7 +544,7 @@ var data = d3.map();
 d3.queue()
     .defer(d3.json, "geo-map.json")
     .await(ready);
-
+count = 1;
 function updateData(self, val){
 
     var button = self;
@@ -553,6 +553,34 @@ function updateData(self, val){
     {
         var id_b = "." + self.id;
         $(id_b).toggle();
+        count += 1;
+        if (count%2 === 0){
+        document.getElementById("reston").disabled = true;
+        document.getElementById("zaire").disabled = true;
+        document.getElementById("sudanVirus").disabled = true;
+        document.getElementById("taiForest").disabled = true;
+        document.getElementById("bundibugyo").disabled = true;   
+
+        document.getElementById("africa").disabled = true;
+        document.getElementById("asia").disabled = true;
+        document.getElementById("europe").disabled = true;
+        document.getElementById("nAmerica").disabled = true;
+        }
+        else{
+
+            document.getElementById("reston").disabled = false;
+            document.getElementById("zaire").disabled = false;
+            document.getElementById("sudanVirus").disabled = false;
+            document.getElementById("taiForest").disabled = false;
+            document.getElementById("bundibugyo").disabled = false;
+          
+            document.getElementById("africa").disabled = false;
+            document.getElementById("asia").disabled = false;
+            document.getElementById("europe").disabled = false;
+            document.getElementById("nAmerica").disabled = false;
+        }
+        document.getElementById(self.id).disabled = false;
+
     }
     $(".arcs").toggle();
     $(".tarcs").toggle();
@@ -784,7 +812,7 @@ thickArcs.selectAll("path")
 				var circleFade = $("g[class^='names']")
 
 				
-				arcsFade.fadeTo(300, 0.7);
+				arcsFade.fadeTo(300, 0.6);
 				tarcsFade.fadeTo(300, 0.9);
 				circleFade.fadeTo(300, 1);
 			}
@@ -840,7 +868,7 @@ arcs.selectAll("path")
         return virusColor[d.virus]
     })
     .style("stroke-width", "0.75px")
-    .style("opacity", "0.7")
+    .style("opacity", "0.6")
     .style("fill", "transparent")
     .on("mouseover", function(d) {
         var per = Math.floor((d.deaths/d.reported)*100)
