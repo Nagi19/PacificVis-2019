@@ -355,7 +355,7 @@ var arcdata = [
 		year : "1996"
         ,name: "South africa",
         continent: "africa",
-        items: 1,
+        items: 3,
         virus: "zaire"
 		,reported: 2,
 		deaths: 1
@@ -366,7 +366,7 @@ var arcdata = [
 		year : "1996"
         ,name: "Gabon",
         continent: "africa",
-        items: 2,
+        items: -1,
         virus: "zaire"
 		,reported: 60,
 		deaths: 45
@@ -377,7 +377,7 @@ var arcdata = [
 		year : "1996"
         ,name: "Gabon",
         continent: "africa",
-        items: 3,
+        items: 1,
         virus: "zaire"
 		,reported: 37,
 		deaths: 21
@@ -888,7 +888,7 @@ arcs.selectAll("path")
 function thinLines(d, sourceName, targetName, bend){
 
 
-    
+    // if (d.year === "1995" && d.name === "Congo" ){
 
     var sourceLngLat = d[sourceName],
              targetLngLat = d[targetName];
@@ -924,29 +924,71 @@ function thinLines(d, sourceName, targetName, bend){
     var a = Math.abs(sourceX - startX);
     var b = Math.abs(sourceY - startY);
 
-    
+    if(Math.abs(Math.abs(sourceX) - Math.abs(startX)) < 20){
 
-    if(Math.abs(Math.abs(sourceX) - Math.abs(startX)) < 40){
+        if (sourceX > startX) {
+             return "M" + startX + "," + startY
+             + "v" + (-midPoint1[1] - 50)
+             + "a" + 2 + "," + -2 + " 0  0 1" + 2 + "," + -2
+             + "h" + (a - 2 * 2)
+             + "a" + 2 + "," + -2 + " 0  0 0 " + 2 + "," + -2
+             + "v" + (-b + midPoint1[1] + - 50 )
+             ;}
+         else {
+ 
+             return "M" + startX + "," + startY
+             + "v" + (-midPoint1[1] - 50)
+             + "a" + -2 + "," + -2 + " 0  0 0" + -2 + "," + -2
+             + "h" + (a - 2 * 2) 
+             + "a" + -2 + "," + -2 + " 0  0 1 " + -2 + "," + -2
+             + "v" + -(b - midPoint1[1] + 50 )
+             ;
+         }
+     }   
+
+    else if(Math.abs(Math.abs(sourceX) - Math.abs(startX)) < 40){
 
        if (sourceX > startX) {
             return "M" + startX + "," + startY
-            + "v" + (-midPoint1[1] - 10)
+            + "v" + (-midPoint1[1] - 50)
             + "a" + 10 + "," + -10 + " 0  0 1" + 10 + "," + -10
             + "h" + (a - 2 * 10)
             + "a" + 10 + "," + -10 + " 0  0 0 " + 10 + "," + -10
-            + "v" + (-b + midPoint1[1] + - 80 )
+            + "v" + (-b + midPoint1[1] + - 30 )
             ;}
         else {
 
             return "M" + startX + "," + startY
-            + "v" + (-midPoint1[1] - 1)
+            + "v" + (-midPoint1[1] - 50)
             + "a" + -10 + "," + -10 + " 0  0 0" + -10 + "," + -10
             + "h" + -(a - 2 * 10)
             + "a" + -10 + "," + -10 + " 0  0 1 " + -10 + "," + -10
-            + "v" + -(b - midPoint1[1] + 80 )
+            + "v" + -(b - midPoint1[1] + 30 )
             ;
         }
-    }
+    }  
+
+    else if(Math.abs(Math.abs(sourceX) - Math.abs(startX)) < 49){
+
+        if (sourceX > startX) {
+             return "M" + startX + "," + startY
+             + "v" + (midPoint1[1] - 50)
+             + "a" + 10 + "," + -10 + " 0  0 1" + 10 + "," + -10
+             + "h" + (a - 2 * 10)
+             + "a" + 10 + "," + -10 + " 0  0 0 " + 10 + "," + -10
+             + "v" + (-b + midPoint1[1] + 51 )
+             ;}
+         else {
+ 
+             return "M" + startX + "," + startY
+             + "v" + (midPoint1[1] - 1)
+             + "a" + -10 + "," + -10 + " 0  0 0" + -10 + "," + -10
+             + "h" + -(a - 2 * 10)
+             + "a" + -10 + "," + -10 + " 0  0 1 " + -10 + "," + -10
+             + "v" + -(b - midPoint1[1] + 70 )
+             ;
+         }
+     }
 
     else if (Math.abs(Math.abs(sourceX) - Math.abs(startX)) < 50){
 
@@ -993,6 +1035,10 @@ function thinLines(d, sourceName, targetName, bend){
             ;
 
         }}
+
+
+
+    // }
     }
 
 
