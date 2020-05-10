@@ -1,0 +1,99 @@
+body{
+color : #2f3e51;
+background-color: #fef8e0;
+font-family: 'Work Sans', sans-serif;
+width: 100%;
+font-size: 15px;
+}
+
+.legend{
+  font-size: 13px;
+}
+  .countries {
+    fill: #e8e0c9;
+    stroke-linejoin: round;
+  }
+
+  .caption {
+      text-anchor: start;
+      font-weight: bold;
+  }
+  .summary {
+      text-anchor: start;
+      font-size: 11px;
+  }
+
+  .arcs {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash 5s linear forwards ;
+}
+ul {
+list-style-type: none;
+}
+.button {
+  border: none;
+  color: white;
+  padding-bottom: 5px;
+  width: 100px;
+  height: 25px;
+  text-align: center;
+  line-height: 5px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 11px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 20px;
+  }
+
+.button1 {background-color: #ee4036;}
+.button2 {background-color: #2bb673;}
+.button3 {background-color: #00adef;}
+.button4 {background-color: #f9a33c;}
+.button5 {background-color: #d91b5b;}
+.button6 {
+border-style: solid;
+border-color: #8e6d4d;
+background-color: #fef8e0;
+color: #2f3e51}
+
+div.tooltip {
+position: absolute;
+text-align: center;
+width: 120px;
+height: 60px;
+padding: 2px;
+font: 9px;
+background:#fff;
+border: 0px;
+border-radius: 8px;
+pointer-events: none;
+}
+path.mouseoverNT{
+  opacity: 0.2;
+}
+
+path.mouseoverTp{
+ opacity: 1;
+}
+path.mouseoverp{
+ opacity: 1;
+}
+g.mouseoverG{
+ opacity: 1;
+}
+
+@keyframes dash {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+img#bottom_img{
+  width: 1800px;
+
+}
